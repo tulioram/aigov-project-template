@@ -1,0 +1,18 @@
+name: AIGOV - Validate Structure
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    name: Validate .ai/ structure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate AIGOV structure
+        shell: pwsh
+        run: ./scripts/validate-aigov.ps1 -ProjectPath $env:GITHUB_WORKSPACE

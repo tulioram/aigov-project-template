@@ -1,5 +1,8 @@
 # AIGOV — AI Governance Project Template
 
+[![AIGOV Structure](https://github.com/tulioram/aigov-project-template/actions/workflows/validate.yml/badge.svg)](https://github.com/tulioram/aigov-project-template/actions/workflows/validate.yml)
+[![Lint Markdown](https://github.com/tulioram/aigov-project-template/actions/workflows/lint-markdown.yml/badge.svg)](https://github.com/tulioram/aigov-project-template/actions/workflows/lint-markdown.yml)
+
 Template universal para padronizar projetos desenvolvidos com apoio de LLMs/agentes de IA no VS Code.
 
 AIGOV é a camada de governança do projeto: escopo, backlog, decisões, riscos, logs de atividades, índice de chats, handoff entre agentes e checklist de implantação.
