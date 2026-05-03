@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "AIGOV: Diagnóstico inicial",
+      "type": "shell",
+      "command": "Write-Host 'Abra um chat e use o prompt em .ai/07_PROMPTS.md > Diagnóstico inicial'",
+      "problemMatcher": []
+    },
+    {
+      "label": "AIGOV: Abrir pasta .ai",
+      "type": "shell",
+      "command": "code .ai",
+      "problemMatcher": []
+    },
+    {
+      "label": "AIGOV: Validar estrutura",
+      "type": "shell",
+      "command": "powershell -ExecutionPolicy Bypass -File ./scripts/validate-aigov.ps1",
+      "problemMatcher": []
+    }
+  ]
+}
