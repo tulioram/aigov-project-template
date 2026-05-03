@@ -6,12 +6,13 @@ param(
     [string]$ProjectPath = (Get-Location).Path,
     [string]$TemplateRepo = "tulioram/aigov-project-template",
     [string]$Branch = "main",
+    [string]$LocalTemplate,
     [switch]$Force
 )
 
 $ErrorActionPreference = "Stop"
 
-if ($TemplateRepo -match "SEU_USUARIO") {
+if (-not $LocalTemplate -and $TemplateRepo -match "SEU_USUARIO") {
     throw '[AIGOV] O parâmetro -TemplateRepo ainda contém o placeholder ''SEU_USUARIO''. Informe o repositório real (ex.: tulioram/aigov-project-template).'
 }
 
@@ -39,17 +40,24 @@ function Replace-Placeholders($filePath) {
 
 if (!(Test-Path $ProjectPath)) { throw "Pasta do projeto não encontrada: $ProjectPath" }
 
-$tempRoot = Join-Path $env:TEMP ("aigov-template-" + [Guid]::NewGuid().ToString())
-$tempZip = "$tempRoot.zip"
-$tempExtract = "$tempRoot-extract"
-$zipUrl = "https://github.com/$TemplateRepo/archive/refs/heads/$Branch.zip"
+if ($LocalTemplate) {
+    if (!(Test-Path $LocalTemplate)) { throw "-LocalTemplate informado mas pasta nao existe: $LocalTemplate" }
+    if (!(Test-Path (Join-Path $LocalTemplate ".ai"))) { throw "-LocalTemplate nao contem pasta .ai: $LocalTemplate" }
+    Write-Step "Usando template local: $LocalTemplate"
+    $templateFolder = Get-Item $LocalTemplate
+} else {
+    $tempRoot = Join-Path $env:TEMP ("aigov-template-" + [Guid]::NewGuid().ToString())
+    $tempZip = "$tempRoot.zip"
+    $tempExtract = "$tempRoot-extract"
+    $zipUrl = "https://github.com/$TemplateRepo/archive/refs/heads/$Branch.zip"
 
-Write-Step "Baixando template: $zipUrl"
-Invoke-WebRequest -Uri $zipUrl -OutFile $tempZip
-Expand-Archive -Path $tempZip -DestinationPath $tempExtract -Force
+    Write-Step "Baixando template: $zipUrl"
+    Invoke-WebRequest -Uri $zipUrl -OutFile $tempZip
+    Expand-Archive -Path $tempZip -DestinationPath $tempExtract -Force
 
-$templateFolder = Get-ChildItem $tempExtract -Directory | Select-Object -First 1
-if ($null -eq $templateFolder) { throw "Não foi possível localizar a pasta extraída do template." }
+    $templateFolder = Get-ChildItem $tempExtract -Directory | Select-Object -First 1
+    if ($null -eq $templateFolder) { throw "Não foi possível localizar a pasta extraída do template." }
+}
 
 $itemsToCopy = @(".ai", "AGENTS.md", "CLAUDE.md", "GEMINI.md", ".github", ".cursor", ".vscode", "scripts")
 
