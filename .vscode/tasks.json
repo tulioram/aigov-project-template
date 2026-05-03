@@ -18,6 +18,12 @@
       "type": "shell",
       "command": "powershell -ExecutionPolicy Bypass -File ./scripts/validate-aigov.ps1",
       "problemMatcher": []
+    },
+    {
+      "label": "AIGOV: Validar escopo",
+      "type": "shell",
+      "command": "powershell -ExecutionPolicy Bypass -File ./scripts/scope-check.ps1",
+      "problemMatcher": []
     }
   ]
 }

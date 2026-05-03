@@ -35,7 +35,8 @@ $overwriteFiles = @(
     "scripts/new-aigov-project.ps1",
     "scripts/register-aigov.ps1",
     "scripts/update-aigov.ps1",
-    "scripts/validate-aigov.ps1"
+    "scripts/validate-aigov.ps1",
+    "scripts/scope-check.ps1"
 )
 
 # Arquivos preservados (registros vivos) — NUNCA sobrescritos

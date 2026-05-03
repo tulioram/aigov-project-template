@@ -104,3 +104,95 @@ Ao final, atualize:
 - .ai/08_CHAT_INDEX.md
 - .ai/04_DECISIONS.md, se a Q&A definiu uma direção que vale registrar como ADR
 ```
+
+## Kickoff de projeto (definição de escopo — PRD curto)
+
+Use UMA VEZ no início do projeto, antes de qualquer linha de código.
+Obrigatório quando `01_PROJECT_SCOPE.md` ainda contém "A definir" em qualquer campo.
+Pode ser pulado apenas se o usuário declarar explicitamente "pular kickoff".
+
+```text
+Este é o {{PROJECT_CODE}}-SCOPE-001 — Kickoff de projeto.
+
+Objetivo:
+Preencher .ai/01_PROJECT_SCOPE.md com um PRD curto antes de qualquer implementação.
+
+Conduza Q&A em até 3 RODADAS curtas (máx 4 perguntas por rodada), usando
+opções clicáveis (radio/checkbox) e permitindo resposta livre. Comece SEMPRE
+pela Rodada 1.
+
+Rodada 1 — Problema e usuário
+1. Qual problema concreto este projeto resolve? (freeform, 1-2 frases)
+2. Quem é o usuário primário? (radio: eu mesmo / time interno / cliente externo / público geral / outro)
+3. Como esse usuário resolve hoje? (freeform — entender alternativas)
+4. Qual a dor principal da solução atual? (freeform)
+
+Rodada 2 — Solução e MVP
+1. Em UMA frase, o que o produto faz? (freeform — proposta de valor)
+2. Quais funcionalidades são MUST-HAVE no MVP? (multiselect com base no problema; mín 3, máx 7)
+3. O que explicitamente NÃO faz parte do MVP? (multiselect; força definição de não-escopo)
+4. Stack/plataforma preferida? (radio: Web / Mobile / Desktop / API-only / CLI / outro)
+
+Rodada 3 — Sucesso e restrições
+1. Como saberemos que o MVP foi bem-sucedido? (multiselect: métricas concretas — usuários, tempo economizado, receita, satisfação, outro)
+2. Prazo desejado para o MVP? (radio: < 1 semana / 1-4 semanas / 1-3 meses / sem prazo)
+3. Restrições conhecidas? (multiselect: orçamento / dependências externas / compliance / equipe / outro)
+4. Premissas em que estamos apostando? (freeform — o que precisa ser verdade para o projeto fazer sentido)
+
+Após as 3 rodadas, REESCREVA .ai/01_PROJECT_SCOPE.md inteiro neste formato:
+
+```markdown
+# 01_PROJECT_SCOPE.md — Escopo do Projeto (PRD curto)
+
+Projeto: {{PROJECT_NAME}}  Código: {{PROJECT_CODE}}
+Atualizado em: AAAA-MM-DD  Versão: 0.1
+
+## 1. Problema
+[1-2 frases — o que dói hoje]
+
+## 2. Usuário primário
+[Quem é, contexto de uso]
+
+## 3. Solução em uma frase
+[Proposta de valor — "X faz Y para Z conseguir W"]
+
+## 4. MVP — Must-have
+- [ ] Funcionalidade 1
+- [ ] Funcionalidade 2
+- [ ] ...
+
+## 5. Fora do escopo (explicitamente)
+- ...
+- ...
+
+## 6. Métricas de sucesso
+- [Métrica 1 + meta]
+- [Métrica 2 + meta]
+
+## 7. Premissas
+- ...
+
+## 8. Restrições
+- Prazo: ...
+- Orçamento: ...
+- Compliance/dependências: ...
+
+## 9. Riscos iniciais
+- ...
+
+## 10. Stack / plataforma
+- ...
+```
+
+REGRAS:
+- Não inicie a Rodada 2 sem ter as respostas da Rodada 1.
+- Sintetize cada resposta livre em 1 frase antes de avançar.
+- Se o usuário responder "não sei" em algo crítico (problema, usuário, MVP),
+  PARE e proponha 2-3 hipóteses para escolha — não invente.
+- Ao final, NÃO implemente nada. Apenas:
+  1. Reescreva 01_PROJECT_SCOPE.md.
+  2. Atualize 02_ROADMAP.md derivando fases do MVP.
+  3. Crie itens em 06_BACKLOG.md a partir das funcionalidades MUST-HAVE.
+  4. Registre AIGOV-ACT em 03_ACTIVITY_LOG.md e chat em 08_CHAT_INDEX.md.
+  5. Apresente resumo de 5 linhas e peça aprovação para iniciar a Fase 1.
+```

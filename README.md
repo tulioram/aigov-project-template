@@ -68,6 +68,18 @@ Comportamento:
 powershell -ExecutionPolicy Bypass -File .\scripts\validate-aigov.ps1
 ```
 
+## Validar o escopo
+
+Verifica se `.ai/01_PROJECT_SCOPE.md` está preenchido (sem seções vazias ou "A definir"):
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\scope-check.ps1
+powershell -ExecutionPolicy Bypass -File .\scripts\scope-check.ps1 -Strict
+powershell -ExecutionPolicy Bypass -File .\scripts\validate-aigov.ps1 -WithScope
+```
+
+Modo padrão exige apenas as 4 primeiras seções (Problema, Usuário, Solução, MVP). `-Strict` exige todas as 10 seções do PRD curto. Suporta tanto o formato PRD curto (gerado via prompt "Kickoff de projeto") quanto o legacy.
+
 ## Governança interna (`.ai-local/`)
 
 Este repositório usa duas pastas de governança:

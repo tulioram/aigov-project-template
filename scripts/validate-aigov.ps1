@@ -1,6 +1,7 @@
 param(
     [string]$ProjectPath = (Get-Location).Path,
-    [switch]$IncludeLocal
+    [switch]$IncludeLocal,
+    [switch]$WithScope
 )
 
 $required = @(
@@ -52,6 +53,10 @@ if ($IncludeLocal -or (Test-Path $localPath)) {
 
 if ($missing.Count -eq 0) {
     Write-Host "[AIGOV] Estrutura válida." -ForegroundColor Green
+    if ($WithScope) {
+        & (Join-Path $PSScriptRoot 'scope-check.ps1') -ProjectPath $ProjectPath
+        exit $LASTEXITCODE
+    }
     exit 0
 }
 
