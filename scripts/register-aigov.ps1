@@ -51,6 +51,10 @@ function aigov {
         } finally { Pop-Location }
     }
 
+    if (!(Test-Path `$ProjectPath)) {
+        New-Item -ItemType Directory -Path `$ProjectPath -Force | Out-Null
+    }
+
     `$installScript = Join-Path `$CachePath "scripts\install-aigov.ps1"
     & `$installScript ``
         -ProjectCode `$ProjectCode ``
