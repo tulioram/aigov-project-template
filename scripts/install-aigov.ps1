@@ -67,4 +67,28 @@ $files = Get-ChildItem -Path $ProjectPath -Recurse -File -Include *.md,*.json,*.
 foreach ($file in $files) { Replace-Placeholders $file.FullName }
 
 Write-Step "Governança AIGOV instalada com sucesso."
-Write-Host "Próximo passo sugerido: $ProjectCode-DIAG-001 — Diagnóstico inicial" -ForegroundColor Yellow
+
+# Detecta se a pasta tinha codigo pre-existente (alem das pastas instaladas pelo template)
+$ignoreNames = @(".ai", ".ai-local", ".github", ".cursor", ".vscode", "scripts", ".git",
+                 "AGENTS.md", "CLAUDE.md", "GEMINI.md", "README.md")
+$existingItems = Get-ChildItem -Path $ProjectPath -Force | Where-Object { $ignoreNames -notcontains $_.Name }
+$hasExistingCode = $existingItems.Count -gt 0
+
+Write-Host ""
+Write-Host "=== Proximo passo ===" -ForegroundColor Green
+if ($hasExistingCode) {
+    Write-Host "Projeto EXISTENTE detectado ($($existingItems.Count) item(ns) fora da governanca)." -ForegroundColor Yellow
+    Write-Host "Abra um chat com o agente e use o prompt:" -ForegroundColor White
+    Write-Host "  -> 'Diagnostico inicial' (em .ai/07_PROMPTS.md)" -ForegroundColor Cyan
+    Write-Host "Ele vai ler o codigo existente e preencher .ai/01, 02, 06, 10..." -ForegroundColor DarkGray
+} else {
+    Write-Host "Projeto NOVO (pasta vazia)." -ForegroundColor Yellow
+    Write-Host "Abra um chat com o agente e use o prompt:" -ForegroundColor White
+    Write-Host "  -> 'Kickoff de projeto (PRD curto)' (em .ai/07_PROMPTS.md)" -ForegroundColor Cyan
+    Write-Host "Ele fara 3 rodadas de Q&A e preenchera .ai/01_PROJECT_SCOPE.md." -ForegroundColor DarkGray
+}
+Write-Host ""
+Write-Host "Apos preencher, valide com:" -ForegroundColor White
+Write-Host "  powershell -ExecutionPolicy Bypass -File .\scripts\validate-aigov.ps1 -WithScope" -ForegroundColor DarkGray
+Write-Host ""
+Write-Host "Atividade sugerida: $ProjectCode-DIAG-001 - Diagnostico inicial" -ForegroundColor DarkYellow
