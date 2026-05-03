@@ -1,11 +1,23 @@
+﻿# Ambientes / secrets
 .env
 .env.*
+
+# Dependências e builds
 node_modules/
 dist/
 build/
 coverage/
 __pycache__/
 *.pyc
+
+# OS / editores
 .DS_Store
 Thumbs.db
 *.log
+
+# AIGOV — governança interna do template (não distribuir)
+.ai-local/
+
+# Backups gerados pelos scripts de instalação/atualização
+.ai.backup-*
+*.backup-*

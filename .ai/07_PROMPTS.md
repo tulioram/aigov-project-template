@@ -45,3 +45,30 @@ Ao final, atualize:
 - .ai/08_CHAT_INDEX.md
 - .ai/10_RISK_REGISTER.md, se necessário
 ```
+
+## Auditoria técnica
+
+```text
+Este é o {{PROJECT_CODE}}-AUDIT-[NUMERO] — Auditoria técnica.
+
+Classifique como tipo 8 (Auditoria técnica) e atue com mentalidade de auditor.
+
+Leia obrigatoriamente toda a pasta .ai antes de analisar qualquer código.
+
+Objetivo:
+Identificar riscos, lacunas estruturais, dívidas técnicas e oportunidades de melhoria — sem implementar correções neste chat.
+
+Entregáveis:
+- inventário do estado atual (arquivos, scripts, módulos);
+- lista de achados classificados por severidade (crítico/importante/moderado/menor);
+- pontos positivos identificados;
+- recomendações priorizadas.
+
+Ao final, atualize:
+- .ai/03_ACTIVITY_LOG.md (registro da auditoria)
+- .ai/08_CHAT_INDEX.md (entrada do chat)
+- .ai/10_RISK_REGISTER.md (riscos identificados)
+- .ai/06_BACKLOG.md (itens recomendados)
+
+Não implemente correções. Apenas diagnostique e registre.
+```

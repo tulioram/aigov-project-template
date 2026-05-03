@@ -5,13 +5,17 @@ param(
     [string]$ProjectName,
     [Parameter(Mandatory=$true)]
     [string]$ProjectPath,
-    [string]$TemplateRepo = "SEU_USUARIO/aigov-project-template",
+    [string]$TemplateRepo = "tulioram/aigov-project-template",
     [string]$Branch = "main",
     [switch]$OpenVSCode,
     [switch]$InitGit
 )
 
 $ErrorActionPreference = "Stop"
+
+if ($TemplateRepo -match "SEU_USUARIO") {
+    throw '[AIGOV] O parâmetro -TemplateRepo ainda contém o placeholder ''SEU_USUARIO''. Informe o repositório real (ex.: tulioram/aigov-project-template).'
+}
 
 if (!(Test-Path $ProjectPath)) { New-Item -ItemType Directory -Path $ProjectPath -Force | Out-Null }
 

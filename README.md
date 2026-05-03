@@ -41,7 +41,38 @@ powershell -ExecutionPolicy Bypass -File .\scripts\new-aigov-project.ps1 `
   -ProjectCode "HEL" `
   -ProjectName "Helena" `
   -ProjectPath "C:\_projetos\helena" `
-  -TemplateRepo "SEU_USUARIO/aigov-project-template" `
+  -TemplateRepo "tulioram/aigov-project-template" `
   -InitGit `
   -OpenVSCode
 ```
+
+## Atualizar a governança de um projeto existente
+
+Após mudanças no template (novos modelos, scripts, prompts), execute na raiz do projeto-destino:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\update-aigov.ps1 -DryRun
+powershell -ExecutionPolicy Bypass -File .\scripts\update-aigov.ps1
+```
+
+Comportamento:
+
+- Faz backup automático da pasta `.ai/` (formato `.ai.backup-update-AAAAMMDD-HHMMSS`).
+- Sobrescreve apenas arquivos estruturais do template (modelos, prompts, scripts, instruções para agentes).
+- Preserva sempre os registros vivos: escopo, activity log, backlog, decisões, índice de chats, riscos, handoffs, deployment log.
+- `-DryRun` lista o que seria alterado sem aplicar.
+
+## Validar a estrutura
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\validate-aigov.ps1
+```
+
+## Governança interna (`.ai-local/`)
+
+Este repositório usa duas pastas de governança:
+
+- `.ai/` é o **template puro** distribuído (placeholders e modelos).
+- `.ai-local/` (gitignored) contém a governança **viva** do próprio template — atividades reais, riscos, backlog, decisões.
+
+Em projetos-destino, apenas `.ai/` é usada e seus arquivos são preenchidos com dados reais.

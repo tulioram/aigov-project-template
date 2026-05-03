@@ -4,12 +4,16 @@ param(
     [Parameter(Mandatory=$true)]
     [string]$ProjectName,
     [string]$ProjectPath = (Get-Location).Path,
-    [string]$TemplateRepo = "SEU_USUARIO/aigov-project-template",
+    [string]$TemplateRepo = "tulioram/aigov-project-template",
     [string]$Branch = "main",
     [switch]$Force
 )
 
 $ErrorActionPreference = "Stop"
+
+if ($TemplateRepo -match "SEU_USUARIO") {
+    throw '[AIGOV] O parâmetro -TemplateRepo ainda contém o placeholder ''SEU_USUARIO''. Informe o repositório real (ex.: tulioram/aigov-project-template).'
+}
 
 function Write-Step($msg) { Write-Host "[AIGOV] $msg" -ForegroundColor Cyan }
 

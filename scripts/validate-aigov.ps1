@@ -1,5 +1,6 @@
 param(
-    [string]$ProjectPath = (Get-Location).Path
+    [string]$ProjectPath = (Get-Location).Path,
+    [switch]$IncludeLocal
 )
 
 $required = @(
@@ -27,6 +28,26 @@ $missing = @()
 foreach ($rel in $required) {
     $path = Join-Path $ProjectPath $rel
     if (!(Test-Path $path)) { $missing += $rel }
+}
+
+# Validação opcional da pasta de governança interna (template-local)
+$localPath = Join-Path $ProjectPath ".ai-local"
+if ($IncludeLocal -or (Test-Path $localPath)) {
+    if (Test-Path $localPath) {
+        Write-Host "[AIGOV] Pasta .ai-local detectada (governança interna)." -ForegroundColor DarkCyan
+        $localRequired = @(
+            ".ai-local/03_ACTIVITY_LOG.md",
+            ".ai-local/06_BACKLOG.md",
+            ".ai-local/08_CHAT_INDEX.md",
+            ".ai-local/10_RISK_REGISTER.md"
+        )
+        foreach ($rel in $localRequired) {
+            $path = Join-Path $ProjectPath $rel
+            if (!(Test-Path $path)) { $missing += $rel }
+        }
+    } elseif ($IncludeLocal) {
+        $missing += ".ai-local/ (esperada com -IncludeLocal)"
+    }
 }
 
 if ($missing.Count -eq 0) {
